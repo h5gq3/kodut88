@@ -1,0 +1,25 @@
+{
+  "name": "homework",
+  "version": "1.0.0",
+  "scripts": {
+    "install-postgresql": "bash scripts/install-postgresql-linux.sh",
+    "install-postgresql-mac": "bash scripts/install-postgresql-mac.sh",
+    "setup-database": "node scripts/setup-database.js",
+    "parse-pdf": "node scripts/parse-PDF.js",
+    "import-data": "node scripts/import-data.js",
+    "start-api": "node scripts/api.js",
+    "start-frontend": "cd frontend && npm start",
+    "start": "npm run install-postgresql && npm run setup-database && npm run parse-pdf && npm run import-data && npm run start-api && npm run start-frontend"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "fast-csv": "^4.3.6",
+    "pdfdataextract": "^3.2.0",
+    "pg-promise": "^11.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.7.2",
+    "typescript": "^5.2.2"
+  }
+}
