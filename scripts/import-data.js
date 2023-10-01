@@ -24,13 +24,13 @@ async function importData() {
     for await (const row of countriesCSV) {
       // check if the country already exists in the table
       const existingCountry = await db.oneOrNone(
-        "SELECT id FROM Countries WHERE country_name = $1",
+        "SELECT id FROM Countries WHERE country = $1",
         [row.country]
       );
 
       if (!existingCountry) {
         const result = await db.one(
-          "INSERT INTO Countries(country_name, timezone) VALUES($1, $2) RETURNING id",
+          "INSERT INTO Countries(country, timezone) VALUES($1, $2) RETURNING id",
           [row.country, row.timezone]
         );
         console.log(row.country, result.id);
@@ -53,20 +53,21 @@ async function importData() {
       for await (const row of officesCSV) {
         // check if the office already exists in the table
         const existingOffice = await db.oneOrNone(
-          "SELECT id FROM Offices WHERE office_name = $1 AND city = $2",
+          "SELECT id FROM Offices WHERE office = $1 AND city = $2",
           [row.name, row.city]
         );
         if (!existingOffice) {
           const countryId = countryMap.get(row.country);
           if (countryId !== undefined) {
             await t.none(
-              "INSERT INTO Offices(office_name, city, country_id, latitude, longitude) VALUES($1, $2, $3, $4, $5)",
+              "INSERT INTO Offices(office, city, country_id, latitude, longitude, is_imported) VALUES($1, $2, $3, $4, $5, $6)",
               [
                 row.name,
                 row.city,
                 countryId,
                 parseFloat(row.latitude),
                 parseFloat(row.longitude),
+                true,
               ]
             );
           }

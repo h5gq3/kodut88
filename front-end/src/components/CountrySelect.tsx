@@ -2,7 +2,7 @@ import React, { useState, useEffect, ChangeEvent } from "react";
 
 interface Country {
   id: number;
-  country_name: string;
+  country: string;
 }
 
 interface CountrySelectProps {
@@ -23,23 +23,29 @@ function CountrySelect({ setSelectedCountryProp }: CountrySelectProps) {
 
   // Handle country selection
   const handleCountryChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const countryId = event.target.value;
-    setSelectedCountry(countryId);
-    setSelectedCountryProp(countryId);
+    const country = event.target.value;
+    setSelectedCountry(country);
+    setSelectedCountryProp(country);
   };
 
   return (
-    <div>
-      <label htmlFor="countrySelect">Select a Country:</label>
+    <div className="m-2">
+      <label
+        className="block text-gray-700 text-sm font-bold mb-2"
+        htmlFor="countrySelect"
+      >
+        select a country:
+      </label>
       <select
+        className="w-full border rounded p-2"
         id="countrySelect"
         onChange={handleCountryChange}
         value={selectedCountry}
       >
-        <option value="">Select a country</option>
+        <option value="">select a country</option>
         {countries.map((country) => (
-          <option key={country.id} value={country.id.toString()}>
-            {country.country_name}
+          <option key={country.id} value={country.country}>
+            {country.country}
           </option>
         ))}
       </select>

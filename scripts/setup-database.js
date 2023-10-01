@@ -16,7 +16,8 @@ const createOfficesTable = `
     city VARCHAR(50) NOT NULL,
     country_id INT REFERENCES Countries(id),
     latitude DECIMAL(9, 6),
-    longitude DECIMAL(9, 6)
+    longitude DECIMAL(9, 6),
+    is_imported BOOLEAN DEFAULT false
   );
 `;
 
